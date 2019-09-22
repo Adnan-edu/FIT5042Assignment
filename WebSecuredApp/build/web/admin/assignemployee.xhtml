@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"      
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js" />
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" />
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+        <h:outputScript library="js" name="formatDatePicker.js" />
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <title>Heritage</title> 
+    </h:head>
+    <h:body>
+        <div class="container">
+            
+            <nav class="navbar navbar-inverse">
+                  <div class="container">
+                    <div class="navbar-header">
+                      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
+                      <a class="navbar-brand" href="#">Heritage-Admin</a>
+                    </div>
+                    <div id="navbar" class="collapse navbar-collapse">
+                      <ul class="nav navbar-nav">
+                        <li class="active"><h:link value="Home" outcome="index" /></li>
+                        <li><h:link value="About" outcome="index.xhtml" /></li>
+                      </ul>
+                    </div><!--/.nav-collapse -->
+                  </div>
+                </nav>
+            
+            <h:form id="HeritageForm">
+                <table class="table table-bordered ">
+                    <tr>
+                        <td width ="100" valign="top">Username: </td>
+                        <td valign="bottom">
+                            <h:inputText id = "employeeemail" value="#{usersManagedBean.userName}" styleClass="form-control" required="true"></h:inputText>    
+                        </td>                      
+                    </tr>
+                    <tr>
+                        <td width ="100" valign="top">Password: </td>
+                        <td valign="bottom">
+                            <h:inputSecret id = "employeeepass" value="#{usersManagedBean.empPass}" styleClass="form-control" required="true"></h:inputSecret>   
+                        </td>                      
+                    </tr>
+                    <tr>
+                        <td width ="100" valign="top">Confirm Password: </td>
+                        <td valign="bottom">
+                            <h:inputSecret id = "employeeeconfpass" value="#{usersManagedBean.empConfPass}" styleClass="form-control" required="true"></h:inputSecret>  
+                        </td>                      
+                    </tr>                    
+                </table>
+
+                <div class="form-group">
+                        <h:commandButton style="margin: 15px" id="save" value="Save" action="#{usersManagedBean.addEmployee()}"  class="btn btn-info" >
+                            <f:param name="propertyID" value=""/>
+                        </h:commandButton>
+                        <h:commandButton style="margin: 15px" id="Close" value="Close" action="admin/index.xhtml" class="btn btn-info" >
+                            <f:param name="propertyID" value=""/>
+                        </h:commandButton> 
+                </div>                 
+                
+
+            </h:form>
+        </div>
+    </h:body>
+</html>
+
