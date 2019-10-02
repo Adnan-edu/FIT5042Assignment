@@ -8,16 +8,20 @@ package fit5042.heritage.mbeans;
 import fit5042.heritage.repository.HeritageRepository;
 import fit5042.heritage.repository.entities.Address;
 import fit5042.heritage.repository.entities.Architecturalstyle;
+import fit5042.heritage.repository.entities.Heritage;
 import fit5042.heritage.repository.entities.HeritageGroup;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -159,5 +163,75 @@ public class HeritageManagedBean implements Serializable{
     private ArrayList<HeritageGroup> heritageGroup;
     private ArrayList<Architecturalstyle> architecturalstyles;
     
+    public List<fit5042.heritage.repository.entities.Heritage> getListHeritagesList(){
+        try {
+                return heritageRepository.getAllHeritages();
+            
+        } catch (Exception ex) {
+            Logger.getLogger(HeritageGroup.class.getName()).log(Level.SEVERE, null, ex);
+            
+        }        
+        return null;
+    }
+    
+    public List<fit5042.heritage.repository.entities.Architecturalstyle> getArchFromDatabase()
+    {
+        try {
+                return heritageRepository.getAllArchitecturalstyle();
+            
+        } catch (Exception ex) {
+        }        
+        return null;        
+    }
 
+    public void addHeritage(fit5042.heritage.controllers.Heritage heritage){
+        fit5042.heritage.repository.entities.Heritage convertedHeritage = this.convertHeritageToEntity(heritage);
+        try {
+            System.out.println("Inside HeritageManagedBean addHeritage");
+            heritageRepository.addHeritage(convertedHeritage);
+        } catch (Exception ex) {
+            Logger.getLogger(HeritageManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }         
+    }
+
+    private fit5042.heritage.repository.entities.Heritage convertHeritageToEntity(fit5042.heritage.controllers.Heritage newHeritage){
+        fit5042.heritage.repository.entities.Heritage heritageEntity = new Heritage();
+
+        String streetNumber = newHeritage.getStreetNumber();
+        String streetAddress = newHeritage.getStreetAddress();
+        String suburb = newHeritage.getSuburb();
+        String postcode = newHeritage.getPostcode();
+        String city = newHeritage.getCity();        
+        Address address = new Address(streetNumber,streetAddress,suburb,postcode,city);
+        heritageEntity.setAddress(address);
+        //int archStyleId = newHeritage.getArchStyleId();
+        String periodName = newHeritage.getPeriodName();
+        String periodFromTo = newHeritage.getPeriodFromTo();
+        fit5042.heritage.repository.entities.Architecturalstyle architecturalstyle = new Architecturalstyle();
+        architecturalstyle.setPeriodName(periodName);
+        architecturalstyle.setPeriodFromTo(periodFromTo);
+        heritageEntity.setArchitecturalstyle(architecturalstyle);
+        
+        String authority = newHeritage.getAuthority();
+        Date dateOfConstructionFrom = newHeritage.getDateOfConstructionFrom();
+        Date dateOfConstructionTo = newHeritage.getDateOfConstructionTo();
+        
+        heritageEntity.setAuthority(authority);
+        heritageEntity.setDateOfConstructionFrom(dateOfConstructionFrom);
+        heritageEntity.setDateOfConstructionTo(dateOfConstructionTo);
+        try {
+            heritageEntity.setHeritageGroup(heritageRepository.getHeritageGroupById(newHeritage.getHeritageGroupId()));
+        } catch (Exception ex) {
+            Logger.getLogger(HeritageManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return heritageEntity;
+    }
+    public void editHeritage(Heritage heritageUpdated){
+        try {
+            heritageRepository.editHeritage(heritageUpdated);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Heritage has been updated succesfully"));
+        } catch (Exception ex) {
+            Logger.getLogger(HeritageManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+    }    
 }

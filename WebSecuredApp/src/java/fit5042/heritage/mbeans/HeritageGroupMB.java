@@ -5,8 +5,10 @@
  */
 package fit5042.heritage.mbeans;
 
+import fit5042.heritage.Architecturalstyle;
 import fit5042.heritage.repository.HeritageRepository;
 import fit5042.heritage.repository.entities.HeritageGroup;
+import fit5042.heritage.repository.entities.Heritage;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,15 +50,46 @@ public class HeritageGroupMB {
     private String groupSubCategory;
     @ManagedProperty(value="#{hGRPManagedBean}") 
     HGRPManagedBean hGRPManagedBean;
-     
+    //Fot Heritage
+    private ArrayList<Heritage> heritageList;
+    
+    @ManagedProperty(value="#{heritageManagedBean}") 
+    HeritageManagedBean heritageManagedBean;
+
+    private ArrayList<fit5042.heritage.repository.entities.Architecturalstyle> architecturalstylesList;
+    
+    
     public HeritageGroupMB() throws Exception {
         heritageGroups = new ArrayList<>();
+        heritageList = new ArrayList<>();
+        architecturalstylesList = new ArrayList<>(); 
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
         hGRPManagedBean = (HGRPManagedBean) FacesContext.getCurrentInstance().getApplication()
-        .getELResolver().getValue(elContext, null, "hGRPManagedBean");        
+        .getELResolver().getValue(elContext, null, "hGRPManagedBean");
+        //For HeritageManagedBean managed bean
+        heritageManagedBean = (HeritageManagedBean) FacesContext.getCurrentInstance().getApplication()
+        .getELResolver().getValue(elContext, null, "heritageManagedBean");        
         this.showHeritageCategory();
+        this.showHeritagesList();
+        this.showArchitecturalstyles();
     }
 
+    public ArrayList<fit5042.heritage.repository.entities.Architecturalstyle> getArchitecturalstylesList() {
+        return architecturalstylesList;
+    }
+
+    public void setArchitecturalstylesList(ArrayList<fit5042.heritage.repository.entities.Architecturalstyle> architecturalstylesList) {
+        this.architecturalstylesList = architecturalstylesList;
+    }
+
+    public ArrayList<Heritage> getHeritageList() {
+        return heritageList;
+    }
+
+    public void setHeritageList(ArrayList<Heritage> heritageList) {
+        this.heritageList = heritageList;
+    }
+    
     public ArrayList<HeritageGroup> getHeritageGroups() {
         return heritageGroups;
     }
@@ -81,6 +114,52 @@ public class HeritageGroupMB {
         this.groupSubCategory = groupSubCategory;
     }
     
+    public void showArchitecturalstyles()
+    {
+        if (architecturalstylesList != null && architecturalstylesList.size() > 0)
+         {
+         }       
+         else
+         {
+            try {
+                         
+                architecturalstylesList.clear();
+                for (fit5042.heritage.repository.entities.Architecturalstyle architecturalstyle : heritageManagedBean.getArchFromDatabase())
+                {
+                    architecturalstylesList.add(architecturalstyle);
+                }                  
+                setArchitecturalstylesList(architecturalstylesList); 
+            } catch (Exception ex) {
+                Logger.getLogger(fit5042.heritage.repository.entities.Architecturalstyle.class.getName()).log(Level.SEVERE, null, ex);
+
+            }             
+         }       
+    }
+    
+    public void showHeritagesList()
+    {
+          if (heritageList != null && heritageList.size() > 0)
+         {
+            
+         }       
+         else
+         {
+            try {
+                         
+                heritageList.clear();
+                for (Heritage heritage : heritageManagedBean.getListHeritagesList())
+                {
+                    heritageList.add(heritage);
+                } 
+                setHeritageList(heritageList);
+
+            } catch (Exception ex) {
+                //Logger.getLogger(HeritageGroup.class.getName()).log(Level.SEVERE, null, ex);
+
+            }             
+         }       
+    }
+    
     public void showHeritageCategory()
     {
          if (heritageGroups != null && heritageGroups.size() > 0)
@@ -99,7 +178,7 @@ public class HeritageGroupMB {
                 setHeritageGroups(heritageGroups);
 
             } catch (Exception ex) {
-                Logger.getLogger(HeritageGroup.class.getName()).log(Level.SEVERE, null, ex);
+                //Logger.getLogger(HeritageGroup.class.getName()).log(Level.SEVERE, null, ex);
 
             }             
          }

@@ -61,8 +61,6 @@ public class AddHRGroup {
     {
         try
        {
-           System.out.println("Getting Null Values 1: "+localHeritageGroup.getGroupCategory());
-           System.out.println("Getting Null Values 2: "+localHeritageGroup.getGroupSubCategory());
             //add this property to db via EJB
            hGRPManagedBean.addHeritageCategory(localHeritageGroup);
 

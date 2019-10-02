@@ -1,10 +1,35 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Add Heritage</title>
-        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>         
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
+        <!-- <h:outputScript library="text/javascript" name="heritageDatePicker.js" />-->
+        <!-- DatePicker JavaScript & CSS -->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.js" />
+        <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" />
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+        <script>
+            $(document).ready(function() {
+               $(".datepicker").datepicker({
+                    dateFormat: 'dd-mm-yy',
+                    changeMonth:true,
+                    changeYear:true,
+                    numberOfMonths:[2,2],
+                    showWeek:true,
+                    yearSuffix:"-CE",
+                    showAnim: "slide",
+                    yearRange: "1960:2017"
+               });
+            });            
+        </script>
+        <style type="text/css">
+            .col-xs-updated {        
+                width: 92% !important;
+            }
+        </style>        
     </h:head>
     <h:body>
         <div class="container">
@@ -23,9 +48,10 @@
                     <div id="navbar" class="collapse navbar-collapse">
                       <ul class="nav navbar-nav">
                         <li class="active"><h:link value="Home" outcome="index" /></li>
-                        <li><h:link value="About" outcome="index.xhtml" /></li>
+                        <li><h:link value="About" outcome="index" /></li>
                         <li><h:link value="Add Heritage" outcome="heritage.xhtml" /></li>
-                         <li><h:link value="Heritage Group" outcome="heritagegroup.xhtml" /></li>
+                        <li><h:link value="Heritage Group" outcome="heritagegroup.xhtml" /></li>
+                        <li><h:link value="Heritage List" outcome="heritagelist.xhtml" /></li>
                       </ul>
                     </div><!--/.nav-collapse -->
                   </div>
@@ -36,43 +62,78 @@
                     <tr>
                         <td width ="100" valign="top">Authority: </td>
                         <td valign="bottom">
-                            <h:inputText id = "authority" value="#{heritageManagedBean.authority}" styleClass="form-control" required="true"></h:inputText>    
+                            <h:inputText id = "authority" value="#{heritage.authority}" styleClass="form-control" required="true"></h:inputText>    
+                        </td>                      
+                    </tr>
+                    <tr>
+                        <td width ="100" valign="top">Date Of Construction From: </td>
+                        <td valign="bottom">
+                            <h:inputText id = "dateOfConstructionFrom" value="#{heritage.dateOfConstructionFrom}" styleClass="form-control datepicker" required="true"><f:convertDateTime pattern = "dd-mm-yyyy" /></h:inputText>   
+                        </td>                      
+                    </tr>
+                    <tr>
+                        <td width ="100" valign="top">Date Of Construction To: </td>
+                        <td valign="bottom">
+                            <h:inputText id = "dateOfConstructionTo" value="#{heritage.dateOfConstructionTo}" styleClass="form-control datepicker" required="true"><f:convertDateTime pattern = "dd-mm-yyyy" /></h:inputText>   
+                        </td>                      
+                    </tr>  
+                    <tr>
+                        <td width ="100" valign="top">Architectural style [Period Name]: </td>
+                        <td valign="bottom">
+                            <h:inputText id = "periodName" value="#{heritage.periodName}" styleClass="form-control" required="true"></h:inputText>  
+                        </td>                      
+                    </tr>
+                    <tr>
+                        <td width ="100" valign="top">Architectural style [Period From-To]: </td>
+                        <td valign="bottom">
+                            <h:inputText id = "periodFromTo" value="#{heritage.periodFromTo}" styleClass="form-control" required="true"></h:inputText>  
+                        </td>                      
+                    </tr>
+                    <tr>
+                        <td width ="100" valign="top">Heritage Group: </td>
+                        <td valign="bottom">
+                            <div class="form-group">
+                                <h:selectOneMenu value="#{heritage.heritageGroupId}" style="margin: 15px">
+                                    <f:selectItems value="#{heritageGroupMB.heritageGroups}" var="groups" itemLabel="#{groups.groupCategory}-#{groups.groupSubCategory}"
+                                                   itemValue="#{groups.groupId}" />
+                                </h:selectOneMenu>             
+                            </div>                             
+                        </td>                      
+                    </tr>                                        
+                    <tr>
+                        <td width ="100" valign="top">Post Code: </td>
+                        <td valign="bottom">
+                            <h:inputText id = "postcode" value="#{heritage.postcode}" styleClass="form-control" required="true"></h:inputText>  
                         </td>                      
                     </tr>
                     <tr>
                         <td width ="100" valign="top">City: </td>
                         <td valign="bottom">
-                            <h:inputText id = "city" value="#{heritageManagedBean.city}" styleClass="form-control" required="true"></h:inputText>   
+                            <h:inputText id = "city" value="#{heritage.city}" styleClass="form-control" required="true"></h:inputText>   
                         </td>                      
-                    </tr>
-                    <tr>
-                        <td width ="100" valign="top">Post Code: </td>
-                        <td valign="bottom">
-                            <h:inputText id = "postcode" value="#{heritageManagedBean.postcode}" styleClass="form-control" required="true"></h:inputText>  
-                        </td>                      
-                    </tr>
+                    </tr>                    
                     <tr>
                         <td width ="100" valign="top">Street Address: </td>
                         <td valign="bottom">
-                            <h:inputText id = "streetaddress" value="#{heritageManagedBean.streetAddress}" styleClass="form-control" required="true"></h:inputText>  
+                            <h:inputText id = "streetaddress" value="#{heritage.streetAddress}" styleClass="form-control" required="true"></h:inputText>  
                         </td>                      
                     </tr>
                     <tr>
                         <td width ="100" valign="top">Street Number: </td>
                         <td valign="bottom">
-                            <h:inputText id = "streetnumber" value="#{heritageManagedBean.streetNumber}" styleClass="form-control" required="true"></h:inputText>  
+                            <h:inputText id = "streetnumber" value="#{heritage.streetNumber}" styleClass="form-control" required="true"></h:inputText>  
                         </td>                      
                     </tr>
                     <tr>
                         <td width ="100" valign="top">Suburb: </td>
                         <td valign="bottom">
-                            <h:inputText id = "suburb" value="#{heritageManagedBean.suburb}" styleClass="form-control" required="true"></h:inputText>  
+                            <h:inputText id = "suburb" value="#{heritage.suburb}" styleClass="form-control" required="true"></h:inputText>  
                         </td>                      
                     </tr>                    
                 </table>
 
                 <div class="form-group">
-                        <h:commandButton style="margin: 15px" id="save" value="Save" action="#{heritageManagedBean.addHeritage()}"  class="btn btn-info" >
+                        <h:commandButton style="margin: 15px" id="save" value="Save" action="#{addHeritage.saveHeritage(heritage)}"  class="btn btn-info" >
                         </h:commandButton>
                 </div>                 
                 

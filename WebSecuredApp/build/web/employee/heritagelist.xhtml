@@ -1,0 +1,118 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Heritage Groups</title>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>         
+    </h:head>
+    <h:body>
+        <div class="container">
+            
+            <nav class="navbar navbar-inverse">
+                  <div class="container">
+                    <div class="navbar-header">
+                      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                      </button>
+                      <a class="navbar-brand" href="#">Heritage-Employee</a>
+                    </div>
+                    <div id="navbar" class="collapse navbar-collapse">
+                      <ul class="nav navbar-nav">
+                        <li class="active"><h:link value="Home" outcome="index" /></li>
+                        <li><h:link value="About" outcome="index" /></li>
+                        <li><h:link value="Add Heritage" outcome="heritage.xhtml" /></li>
+                        <li><h:link value="Heritage Group" outcome="heritagegroup.xhtml" /></li>
+                        <li><h:link value="Heritage List" outcome="heritagelist.xhtml" /></li>
+                      </ul>
+                    </div><!--/.nav-collapse -->
+                  </div>
+                </nav>
+            </div>
+            <h:form id="MyForm">
+                <table class="table table-bordered table-striped table-hover table-responsive">
+                    <!-- For each property in properties ArrayList... --> 
+                    <tr>
+                            <td> 
+                                <h:outputLabel id="Id" value="Id"  />
+                            </td>                        
+                            <td> 
+                                <h:outputLabel id="Authority" value="Authority"  />
+                            </td>
+                            <td> 
+                                <h:outputLabel id="constructionFrom" value="Date Of Construction From"  />
+                            </td>
+          
+                            <td> 
+                                <h:outputLabel id="constructionTo" value="Date Of Construction To"/>
+                            </td>
+                            <td> 
+                                <h:outputLabel id="archStyle" value="Architectural Style"/>
+                            </td>
+                            <td> 
+                                <h:outputLabel id="heritageGrp" value="Heritage Group"/>
+                            </td>                        
+                            <td> 
+                                <h:outputLabel id="Modify" value="Modify"/>
+                            </td>                         
+                     </tr>
+                    
+                    <ui:repeat id="Myrepeat" value="#{heritageGroupMB.heritageList}"  var="heritage" varStatus="status"> 
+                        
+                        <tr> 
+                            <td>
+                                <h:outputText value="#{heritageGroupMB.heritageList.get(status.index).heritageId}" id="heritageId"/> 
+                                
+                            </td>                            
+                            <td>
+                                <h:outputText value="#{heritageGroupMB.heritageList.get(status.index).authority}"/> 
+                                
+                            </td>
+                            
+                            <td> 
+                                <h:outputText value="#{heritageGroupMB.heritageList.get(status.index).dateOfConstructionFrom}"  />
+                            </td>
+                            <td>
+                                <h:outputText value="#{heritageGroupMB.heritageList.get(status.index).dateOfConstructionTo}"></h:outputText>
+                            </td>
+                            <td>
+                                <h:outputText value="#{heritageGroupMB.heritageList.get(status.index).architecturalstyle}"></h:outputText>
+                            </td>
+                            <td>
+                                <h:outputText value="#{heritageGroupMB.heritageList.get(status.index).heritageGroup}"></h:outputText>
+                            </td>                            
+                            <td>
+                                <h:commandLink styleClass="btn btn-primary btn-mini btn-xs" value="View" action="index.xhtml" disabled="#{heritageGroupMB.heritageList.get(status.index).heritageId == null}">
+                                    <!-- pass the parameter to next page, the param name is propertyID, and the value is index + 1. 
+                                    You can get the value from next page us;ing the indexController -->
+                                    <f:param name="heritageId" value="#{status.index + 1}"/>
+                                    
+                                </h:commandLink>
+                                <h:commandLink styleClass="btn btn-info btn-mini btn-xs" style="margin-left: 8px;" value="Edit" action="editheritage.xhtml" disabled="#{heritageGroupMB.heritageList.get(status.index).heritageId == null}">
+                                    <!-- pass the parameter to next page, the param name is propertyID, and the value is index + 1. 
+                                    You can get the value from next page using the indexController -->
+                                    <f:param name="heritageId"  value="#{status.index + 1}"></f:param> 
+                                </h:commandLink>
+                                
+                                <h:commandLink styleClass="btn btn-danger btn-mini btn-xs" style="margin-left: 8px;" value="Delete"  action="#{removeHeritageGroup.removeHerGrp(heritageGroupMB.heritageGroups.get(status.index).groupId)}" disabled="#{heritageGroupMB.heritageList.get(status.index).heritageId == null}">
+                                </h:commandLink>  
+                                <h:outputText value=" "/>
+                            </td>
+                            
+                        </tr> 
+
+                    </ui:repeat> 
+                    <div class="form-group">
+                        <h:commandButton style="margin: 15px" id="addHG" value="Add Group" action="addheritagegroup.xhtml" class="btn btn-info" />
+                        <h:commandButton style="margin: 15px" id="fetchHRGP" value="Show" action="#{heritageGroupMB.showHeritageCategory()}" class="btn btn-info" />
+                    </div>
+                </table>                       
+            </h:form>
+    </h:body>
+</html>
+

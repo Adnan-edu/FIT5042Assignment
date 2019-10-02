@@ -6,6 +6,7 @@
 package fit5042.heritage.repository;
 
 import fit5042.heritage.repository.entities.Address;
+import fit5042.heritage.repository.entities.Architecturalstyle;
 import fit5042.heritage.repository.entities.Heritage;
 import fit5042.heritage.repository.entities.HeritageGroup;
 import fit5042.heritage.repository.entities.Users;
@@ -28,7 +29,10 @@ public class JPAHeritageRepositoryImpl implements HeritageRepository{
         
     @Override
     public void addHeritage(Heritage heritage) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Architecturalstyle architecturalstyle = heritage.getArchitecturalstyle();
+        entityManager.persist(architecturalstyle);
+        System.out.println("Inside JPAHeritageRepositoryImpl");
+        entityManager.persist(heritage);
     }
 
     @Override
@@ -38,7 +42,8 @@ public class JPAHeritageRepositoryImpl implements HeritageRepository{
 
     @Override
     public List<Heritage> getAllHeritages() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Heritage> heritages = entityManager.createNamedQuery(Heritage.GET_ALL_QUERY_NAME).getResultList();
+        return heritages;
     }
 
     @Override
@@ -53,7 +58,7 @@ public class JPAHeritageRepositoryImpl implements HeritageRepository{
 
     @Override
     public void editHeritage(Heritage heritage) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        entityManager.merge(heritage);
     }
 
     @Override
@@ -77,7 +82,7 @@ public class JPAHeritageRepositoryImpl implements HeritageRepository{
     @Override
     public List<HeritageGroup> getAllHeritageGroups() throws Exception {
         List<HeritageGroup> hr = entityManager.createNamedQuery(HeritageGroup.GET_ALL_QUERY_NAME).getResultList();
-        System.out.println("Size of the list: "+hr.size());
+        //System.out.println("Size of the list: "+hr.size());
         return hr;
     }
 
@@ -97,6 +102,19 @@ public class JPAHeritageRepositoryImpl implements HeritageRepository{
             entityManager.remove(heritageGroup);
         }
         
+    }
+
+    @Override
+    public HeritageGroup getHeritageGroupById(int groupId) throws Exception {
+        HeritageGroup heritageGroup = entityManager.find(HeritageGroup.class, groupId);
+        return heritageGroup;
+    }
+
+    @Override
+    public List<Architecturalstyle> getAllArchitecturalstyle() throws Exception {
+    
+        List<Architecturalstyle> architecturalstylesList = entityManager.createNamedQuery(Architecturalstyle.GET_ALL_QUERY_NAME).getResultList();
+        return architecturalstylesList;
     }
     
 }

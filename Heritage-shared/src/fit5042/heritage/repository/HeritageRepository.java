@@ -6,6 +6,7 @@
 package fit5042.heritage.repository;
 
 import fit5042.heritage.repository.entities.Address;
+import fit5042.heritage.repository.entities.Architecturalstyle;
 import fit5042.heritage.repository.entities.Heritage;
 import fit5042.heritage.repository.entities.HeritageGroup;
 import fit5042.heritage.repository.entities.Users;
@@ -29,6 +30,8 @@ public interface HeritageRepository {
      
      public List<Heritage> getAllHeritages() throws Exception;
      
+     public List<Architecturalstyle> getAllArchitecturalstyle() throws Exception;
+     
      public List<Address> getAllAddress() throws Exception;
      
      public void removeHeritage(int heritageId) throws Exception;
@@ -41,8 +44,9 @@ public interface HeritageRepository {
      
      public void addHeritageGroup(HeritageGroup heritageGroup)throws Exception;
      
-     public void removeHeritageGroup(int groupId)throws Exception;
+     public void removeHeritageGroup(int groupId) throws Exception;
      
      public List<HeritageGroup> getAllHeritageGroups() throws Exception;
     
+     public HeritageGroup getHeritageGroupById(int groupId) throws Exception;
 }
