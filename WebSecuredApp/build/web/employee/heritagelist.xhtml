@@ -99,7 +99,7 @@
                                     <f:param name="heritageId"  value="#{status.index + 1}"></f:param> 
                                 </h:commandLink>
                                 
-                                <h:commandLink styleClass="btn btn-danger btn-mini btn-xs" style="margin-left: 8px;" value="Delete"  action="#{removeHeritageGroup.removeHerGrp(heritageGroupMB.heritageGroups.get(status.index).groupId)}" disabled="#{heritageGroupMB.heritageList.get(status.index).heritageId == null}">
+                                <h:commandLink styleClass="btn btn-danger btn-mini btn-xs" style="margin-left: 8px;" value="Delete"  action="#{removeHeritage.removeHeritage(heritageGroupMB.heritageList.get(status.index).heritageId)}" disabled="#{heritageGroupMB.heritageList.get(status.index).heritageId == null}">
                                 </h:commandLink>  
                                 <h:outputText value=" "/>
                             </td>

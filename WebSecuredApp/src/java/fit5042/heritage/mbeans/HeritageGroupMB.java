@@ -196,6 +196,22 @@ public class HeritageGroupMB {
         setHeritageGroups(heritageGroups);        
     }
     
+    public void searchHeritageFromDB(){
+        try {
+                         
+                heritageList.clear();
+                for (Heritage heritage : heritageManagedBean.getListHeritagesList())
+                {
+                    heritageList.add(heritage);
+                } 
+                setHeritageList(heritageList);
+
+            } catch (Exception ex) {
+                Logger.getLogger(HeritageGroupMB.class.getName()).log(Level.SEVERE, null, ex);
+
+            }        
+    }
+    
     
     
 }

@@ -54,11 +54,10 @@ public class AddHeritage {
        System.out.println(heritageLocal.toString());
        try
        {
-           System.out.println("Inside BB AddHeritage saveHeritage");
             heritageManagedBean.addHeritage(heritageLocal);
 
             //refresh the list in PropertyApplication bean
-            //app.searchAll();
+            heritageApplication.searchHeritageFromDB();
             //updatePropertyListInPropertyApplicationBean();
 
             //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Property has been added succesfully"));

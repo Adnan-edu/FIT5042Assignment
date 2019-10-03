@@ -233,5 +233,13 @@ public class HeritageManagedBean implements Serializable{
         } catch (Exception ex) {
             Logger.getLogger(HeritageManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }    
-    }    
+    }
+
+    public void removeHeritage(int heritageId){
+         try {
+            heritageRepository.removeHeritage(heritageId);
+        } catch (Exception ex) {
+            Logger.getLogger(HeritageManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }       
+    }
 }

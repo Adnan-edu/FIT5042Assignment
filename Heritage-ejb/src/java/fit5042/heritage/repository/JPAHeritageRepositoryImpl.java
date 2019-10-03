@@ -53,7 +53,10 @@ public class JPAHeritageRepositoryImpl implements HeritageRepository{
 
     @Override
     public void removeHeritage(int heritageId) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Heritage heritage= entityManager.find(Heritage.class, heritageId);
+        if(heritage!=null){
+            entityManager.remove(heritage);
+        }        
     }
 
     @Override

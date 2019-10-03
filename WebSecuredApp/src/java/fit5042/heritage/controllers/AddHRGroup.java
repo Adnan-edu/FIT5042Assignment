@@ -65,7 +65,7 @@ public class AddHRGroup {
            hGRPManagedBean.addHeritageCategory(localHeritageGroup);
 
             //refresh the list in PropertyApplication bean
-            app.searchHGRPAll();
+           app.searchHGRPAll();
            
            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Heritage group has been added succesfully"));
             //refresh the property list in propertyApplication bean
