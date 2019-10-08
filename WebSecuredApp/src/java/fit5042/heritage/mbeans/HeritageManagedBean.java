@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -242,4 +243,15 @@ public class HeritageManagedBean implements Serializable{
             Logger.getLogger(HeritageManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }       
     }
+    
+    public List<Heritage> searchHeriGrpArchId(int searchHeritageByGrpId, int searchHeriByArchId){
+         try {
+            return heritageRepository.searchHeritageByBoth(searchHeritageByGrpId,searchHeriByArchId);
+        } catch (Exception ex) {
+           
+            Logger.getLogger(HeritageManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;       
+    }    
 }

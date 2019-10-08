@@ -36,6 +36,8 @@ public interface HeritageRepository {
      
      public void removeHeritage(int heritageId) throws Exception;
      
+     public List<Heritage> searchHeritageByBoth(int searchHeritageByGrpId, int searchHeriByArchId) throws Exception;;
+     
      public void editHeritage(Heritage heritage) throws Exception;
      
      public void editHeritageGroup(HeritageGroup heritageGroup) throws Exception;

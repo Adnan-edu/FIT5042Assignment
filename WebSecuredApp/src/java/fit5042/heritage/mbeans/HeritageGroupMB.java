@@ -5,7 +5,6 @@
  */
 package fit5042.heritage.mbeans;
 
-import fit5042.heritage.Architecturalstyle;
 import fit5042.heritage.repository.HeritageRepository;
 import fit5042.heritage.repository.entities.HeritageGroup;
 import fit5042.heritage.repository.entities.Heritage;
@@ -52,7 +51,9 @@ public class HeritageGroupMB {
     HGRPManagedBean hGRPManagedBean;
     //Fot Heritage
     private ArrayList<Heritage> heritageList;
-    
+    //Searched heritage by user
+    private ArrayList<Heritage> searchedHeritage;
+
     @ManagedProperty(value="#{heritageManagedBean}") 
     HeritageManagedBean heritageManagedBean;
 
@@ -62,6 +63,7 @@ public class HeritageGroupMB {
     public HeritageGroupMB() throws Exception {
         heritageGroups = new ArrayList<>();
         heritageList = new ArrayList<>();
+        searchedHeritage = new ArrayList<>();
         architecturalstylesList = new ArrayList<>(); 
         ELContext elContext = FacesContext.getCurrentInstance().getELContext();
         hGRPManagedBean = (HGRPManagedBean) FacesContext.getCurrentInstance().getApplication()
@@ -72,6 +74,14 @@ public class HeritageGroupMB {
         this.showHeritageCategory();
         this.showHeritagesList();
         this.showArchitecturalstyles();
+    }
+
+    public ArrayList<Heritage> getSearchedHeritage() {
+        return searchedHeritage;
+    }
+
+    public void setSearchedHeritage(ArrayList<Heritage> searchedHeritage) {
+        this.searchedHeritage = searchedHeritage;
     }
 
     public ArrayList<fit5042.heritage.repository.entities.Architecturalstyle> getArchitecturalstylesList() {
@@ -212,6 +222,21 @@ public class HeritageGroupMB {
             }        
     }
     
+    public void searchHeritageByBoth(int searchHeritageByGrpId, int searchHeriByArchId){
+        searchedHeritage.clear();
+        for (Heritage heritage : heritageManagedBean.searchHeriGrpArchId(searchHeritageByGrpId,searchHeriByArchId))
+        {
+            searchedHeritage.add(heritage);
+        } 
+        setSearchedHeritage(searchedHeritage);
+    }
     
+    public void updateSearchedHeritageList(){
+        
+    }
     
+    public void clearSearch(){
+        this.getSearchedHeritage().clear();
+    }
+     
 }
