@@ -3,12 +3,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"></h:outputStylesheet>
         <title>Authentication Error</title>
     </h:head>
     <h:body>
+      
         <h1>Authentication Error</h1>
-        <p>The user credentials you have supplied are incorrect.</p>
-        <p>Please attempt to <h:link outcome="login" value="login" /> again.</p>
+        <div class="alert alert-danger" role="alert">
+            Authentication Error.The user credentials you have supplied are incorrect. Please attempt to <h:link outcome="index.xhtml" class="alert-link">Login Again</h:link>
+        </div>  
     </h:body>
 </html>
 

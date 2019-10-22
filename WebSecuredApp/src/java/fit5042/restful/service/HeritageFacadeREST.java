@@ -63,9 +63,9 @@ public class HeritageFacadeREST extends AbstractFacade<Heritage> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Response find(@PathParam("id") Integer id) {
-        //return super.find(id);
-        Heritagegroup contactPerson = em.find(Heritagegroup.class, id);
+    public Heritage find(@PathParam("id") Integer id) {
+        return super.find(id);
+        /*Heritagegroup contactPerson = em.find(Heritagegroup.class, id);
         System.out.println("Size of my list is: "+contactPerson.getHeritageCollection().size());
         em.refresh(contactPerson);
         //return (List<Heritage>) contactPerson.getHeritageCollection();
@@ -77,7 +77,7 @@ public class HeritageFacadeREST extends AbstractFacade<Heritage> {
           .header("Access-Control-Allow-Methods", 
             "GET, POST, PUT, DELETE, OPTIONS, HEAD")
           .entity(contactPerson.getHeritageCollection())
-          .build();        
+          .build();    */    
     }
 
     @GET
@@ -135,17 +135,10 @@ public class HeritageFacadeREST extends AbstractFacade<Heritage> {
     }
     
     @GET
-    @Path("/test")
+    @Path("/fetchAllHeritages")
     @Produces({MediaType.APPLICATION_JSON})
     public Response test() {
-        System.out.println("Hello Ho");
-        List<Heritage> heritageList = super.findAll();
-        //System.out.println(animalList);
-        String message = "This is a text response";  
-       
-        
-        //ObjectMapper mapper = new ObjectMapper();
-//        return Response.ok(message, MediaType.APPLICATION_JSON).build();
+        List<Heritage> heritageList = this.findAll(); 
         
         return Response.status(200)
           .header("Access-Control-Allow-Origin", "*")
