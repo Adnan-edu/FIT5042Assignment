@@ -1,20 +1,58 @@
 <div class="main">
 
-  <!-- Actual search box -->
-  <div class="form-group has-search">
-    <span class="fa fa-search form-control-feedback"></span>
-    <input type="text" class="form-control" name="heritageId" [(ngModel)] = "heritageId" placeholder="Search by group id">
-  </div>
 
-  <!-- Another variation with a button -->
-  <div class="form-group has-search">
-    <span class="fa fa-search form-control-feedback"></span>
-    <input type="text" class="form-control" name="archId" [(ngModel)] = "archId" placeholder="Search by arch id">
-  </div>
-  <button type="button" class="mt-4 text-center btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" (click)="fetchData()">
-    Search Heritage
-  </button>
+  <div class="container">
+
+      <div class="form-group">
+        <label for="heritagegroup">Heritage Groups</label>
+        <select id="heritagegroup" name="heritagegroups" [(ngModel)]="selectedGroup"
+                class="form-control">
+          <option *ngFor="let group of heritagegroups" [value]="group.groupId">
+            {{group.groupcategory}}-{{group.groupsubcategory}}
+          </option>
+        </select>
+      </div>
+
+    <div class="form-group">
+      <label for="archstyle">Architectural Style</label>
+      <select id="archstyle" name="archstyle" [(ngModel)]="selectedStyleId"
+              class="form-control">
+        <option *ngFor="let style of architecturalstyles" [value]="style.archstyleId">
+          {{style.periodname}}-{{style.periodfromto}}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <button type="button" class="mt-4 text-center btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" (click)="fetchData()">
+        Search Heritage
+      </button>
+    </div>
+    <div class="form-group">
+      <button type="button" class="mt-4 text-center btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" (click)="fetchAllHeritageData()">
+        Fetch All
+      </button>
+    </div>
+    </div>
 </div>
-<div *ngFor="let heritage of heritagesList" style="text-align: center">
-  <h3>{{ heritage.heritageId }} - {{ heritage.authority }}</h3>
-</div>
+  <table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">ID</th>
+        <th scope="col">Authority</th>
+        <th scope="col">ConstructionFrom</th>
+        <th scope="col">ConstructionTO</th>
+        <th scope="col">Address</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let heritage of heritagesList; let i = index">
+        <th scope="row">{{i+1}}</th>
+        <td>{{ heritage.heritageId }}</td>
+        <td>{{heritage.authority}}</td>
+        <td>{{heritage.dateofconstructionfrom |  date:'dd/MM/yyyy' }}</td>
+        <td>{{heritage.dateofconstructionto |  date:'dd/MM/yyyy' }}</td>
+        <td>{{heritage.city}}, {{heritage.streetAddress}} {{heritage.streetNumber}}, Postcode: {{heritage.postcode}} </td>
+      </tr>
+    </tbody>
+  </table>
