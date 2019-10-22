@@ -36,8 +36,24 @@ public class JPAHeritageRepositoryImpl implements HeritageRepository{
     @Override
     public void addHeritage(Heritage heritage) throws Exception {
         Architecturalstyle architecturalstyle = heritage.getArchitecturalstyle();
-        entityManager.persist(architecturalstyle);
-        System.out.println("Inside JPAHeritageRepositoryImpl");
+        List<Architecturalstyle> listsArch = entityManager.createNamedQuery(Architecturalstyle.GET_ALL_QUERY_NAME).getResultList();
+        Architecturalstyle newArchitecturalstyle = null;
+        for(Architecturalstyle arch: listsArch)
+        {
+            if(arch.getPeriodName().equals(architecturalstyle.getPeriodName()) && arch.getPeriodFromTo().equals(architecturalstyle.getPeriodFromTo()))
+            {
+                newArchitecturalstyle = arch;
+                break;
+            }            
+        }
+        if(newArchitecturalstyle!=null)
+        {
+            heritage.setArchitecturalstyle(newArchitecturalstyle);
+        }
+        else
+        {
+            entityManager.persist(architecturalstyle);
+        }
         entityManager.persist(heritage);
     }
 
@@ -77,7 +93,6 @@ public class JPAHeritageRepositoryImpl implements HeritageRepository{
 
     @Override
     public void addUser(Users user) throws Exception {
-         System.out.println("Before Adding 5"); 
          List<Users> users =  entityManager.createNamedQuery(Users.FIND_ALL_QUERY_NAME).getResultList(); 
          user.setId(users.get(0).getId()+ 1);
          entityManager.persist(user);
