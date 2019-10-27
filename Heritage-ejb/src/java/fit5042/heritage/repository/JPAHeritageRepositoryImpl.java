@@ -106,7 +106,7 @@ public class JPAHeritageRepositoryImpl implements HeritageRepository{
     @Override
     public List<HeritageGroup> getAllHeritageGroups() throws Exception {
         List<HeritageGroup> hr = entityManager.createNamedQuery(HeritageGroup.GET_ALL_QUERY_NAME).getResultList();
-        //System.out.println("Size of the list: "+hr.size());
+        
         return hr;
     }
 
@@ -122,6 +122,11 @@ public class JPAHeritageRepositoryImpl implements HeritageRepository{
     @Override
     public void removeHeritageGroup(int groupId) throws Exception {
         HeritageGroup heritageGroup = entityManager.find(HeritageGroup.class, groupId);
+        heritageGroup.getHeritages().size();
+        entityManager.refresh(heritageGroup);
+        Set<Heritage> heritages = heritageGroup.getHeritages();
+        if(heritages.size()>0)
+            throw new Exception();
         if(heritageGroup!=null){
             entityManager.remove(heritageGroup);
         }
@@ -137,7 +142,12 @@ public class JPAHeritageRepositoryImpl implements HeritageRepository{
     @Override
     public List<Architecturalstyle> getAllArchitecturalstyle() throws Exception {
     
-        List<Architecturalstyle> architecturalstylesList = entityManager.createNamedQuery(Architecturalstyle.GET_ALL_QUERY_NAME).getResultList();
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery query = builder.createQuery(Architecturalstyle.class);
+        Root<Architecturalstyle> p = query.from(Architecturalstyle.class);
+        query.select(p);
+        List<Architecturalstyle> architecturalstylesList = entityManager.createQuery(query).getResultList();
+        
         return architecturalstylesList;
     }
 
@@ -171,16 +181,29 @@ public class JPAHeritageRepositoryImpl implements HeritageRepository{
                 }
             }     
         }
-        System.out.println("Added Heritage: "+newHeritage.get(0).getAuthority());
-        
-        /*CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery query = builder.createQuery(Heritage.class);
-        Root<Heritage> p = query.from(Heritage.class);
-        //query.select(p).where(builder.lessThanOrEqualTo(p.get("price").as(Double.class), budget));
-        query.select(p).where(builder.equals(p.get("") .as(int.class), searchHeritageByGrpId));
-        List<Property> lp = entityManager.createQuery(query).getResultList();
-        return lp;*/
         return newHeritage;
+    }
+
+    @Override
+    public void removeArchStyle(int archStyleId) throws Exception {
+        Architecturalstyle architecturalstyle = entityManager.find(Architecturalstyle.class, archStyleId);
+        architecturalstyle.getHeritages().size();
+        entityManager.refresh(architecturalstyle);
+        Set<Heritage> heritages = architecturalstyle.getHeritages();
+        if(heritages.size()>0)
+            throw new Exception();
+        if(architecturalstyle!=null){
+            entityManager.remove(architecturalstyle);
+        }        
+    }
+
+    @Override
+    public void editArchStyle(Architecturalstyle architecturalstyle) throws Exception {
+         try {
+            entityManager.merge(architecturalstyle);
+        } catch (Exception ex) {
+            throw new Exception();
+        }         
     }
     
 }
