@@ -42,11 +42,15 @@ public interface HeritageRepository {
      
      public void editHeritageGroup(HeritageGroup heritageGroup) throws Exception;
      
+     public void editArchStyle(Architecturalstyle architecturalstyle) throws Exception;
+     
      Set<Heritage> searchHeritageByCity(String city) throws Exception;
      
      public void addHeritageGroup(HeritageGroup heritageGroup)throws Exception;
      
      public void removeHeritageGroup(int groupId) throws Exception;
+     
+     public void removeArchStyle(int archStyleId) throws Exception;
      
      public List<HeritageGroup> getAllHeritageGroups() throws Exception;
     
