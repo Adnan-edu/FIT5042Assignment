@@ -11,28 +11,35 @@
     <h:body>
         <div class="container">
             
-            <nav class="navbar navbar-inverse">
-                  <div class="container">
-                    <div class="navbar-header">
-                      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                      </button>
-                      <a class="navbar-brand" href="#">Heritage-Employee</a>
-                    </div>
-                    <div id="navbar" class="collapse navbar-collapse">
-                      <ul class="nav navbar-nav">
-                        <li class="active"><h:link value="Home" outcome="index" /></li>
-                        <li><h:link value="About" outcome="index.xhtml" /></li>
-                        <li><h:link value="Add Heritage" outcome="heritage.xhtml" /></li>
-                        <li><h:link value="Heritage Group" outcome="heritagegroup.xhtml" /></li>
-                      </ul>
-                    </div><!--/.nav-collapse -->
-                  </div>
+                <nav class="navbar navbar-inverse">
+                      <div class="container">
+                        <div class="navbar-header">
+                          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                          </button>
+                          <a class="navbar-brand" href="#"><h:outputText value="#{logoutController.loggedInUser}" /></a>
+                        </div>
+                        <div id="navbar" class="collapse navbar-collapse">
+                          <ul class="nav navbar-nav">
+                            <li class="active"><h:link value="Home" outcome="index" /></li>
+                            <li><h:link value="About" outcome="index" /></li>
+                            <li><h:link value="Add Heritage" outcome="heritage.xhtml" /></li>
+                            <li><h:link value="Heritage Group" outcome="heritagegroup.xhtml" /></li>
+                            <li><h:link value="Heritage List" outcome="heritagelist.xhtml" /></li>
+                            <li><h:link value="Arch Style" outcome="archstylelist.xhtml" /></li>
+                          </ul>
+                            <h:form class="space">
+                                <ul class="nav navbar-right">
+                                    <li><h:commandLink value="Logout" action="#{logoutController.logoutNow()}" class="btn btn-info" /></li>
+                                </ul>                            
+                            </h:form>                        
+                        </div>
+                      </div>
                 </nav>           
-            <h:form id="HeritageForm">
+            <h:form id="HeritageGroupForm">
                 <table class="table table-bordered ">
                     <tr>
                         <td width ="100" valign="top">Category Name: </td>
@@ -43,7 +50,7 @@
                     <tr>
                         <td width ="100" valign="top">Sub-Category Name: </td>
                         <td valign="bottom">
-                            <h:inputText id = "city" value="#{heritage_group.groupSubCategory}" styleClass="form-control" required="true"></h:inputText>   
+                            <h:inputText id = "Sub_category" value="#{heritage_group.groupSubCategory}" styleClass="form-control" required="true"></h:inputText>   
                         </td>                      
                     </tr>                    
                 </table>
@@ -51,7 +58,7 @@
                 <div class="form-group">
                         <h:commandButton style="margin: 15px" id="save" value="Save" action="#{addHRGroup.addHeritageRGroup(heritage_group)}"  class="btn btn-info" >
                         </h:commandButton>
-                         <h:commandButton style="margin: 15px" id="Close" value="Close" action="faces/employee/addheritagegroup.xhtml" class="btn btn-info" >
+                         <h:commandButton style="margin: 15px" id="Close" value="Close" action="heritagegroup.xhtml" class="btn btn-info" >
                            
                         </h:commandButton> 
                 </div>                 

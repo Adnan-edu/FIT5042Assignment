@@ -28,21 +28,22 @@ public class LogoutController {
     {
         try
         {
-            ExternalContext context
-                    = FacesContext.getCurrentInstance().getExternalContext();
-            HttpSession session = (HttpSession) context.getSession(false);
-           
-            HttpServletResponse httpResponse = (HttpServletResponse) context.getResponse();
+            ExternalContext contextForSession = FacesContext.getCurrentInstance().getExternalContext();
+            HttpSession heritageSession = (HttpSession) contextForSession.getSession(false);
+            HttpServletResponse httpResponse = (HttpServletResponse) contextForSession.getResponse();
             httpResponse.setHeader("Cache-Control", "private,no-store,no-cache");
-            session.invalidate();
-            context.redirect("http://localhost:8080/WebSecuredApp/faces/index.xhtml");
+            heritageSession.invalidate();
+            contextForSession.redirect("http://localhost:8080/WebSecuredApp/faces/index.xhtml");
         }catch(Exception e)
-        {
-            System.out.println("Exception happened during log out"+e.getMessage());
-        }
+        {}
         return "http://localhost:8080/WebSecuredApp/faces/index.xhtml?faces-redirect=true";
     }
     public String getHome(){
-        return "/admin/index.xhtml";
+        return "/faces/admin/index.xhtml";
     }
+    //This method returns the logged in user email at the top left corner in the nav 
+    public String getLoggedInUser()
+    {
+        return FacesContext.getCurrentInstance().getExternalContext().getUserPrincipal().getName();
+    }     
 }

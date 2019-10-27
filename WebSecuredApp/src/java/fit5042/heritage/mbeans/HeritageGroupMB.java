@@ -188,7 +188,7 @@ public class HeritageGroupMB {
                 setHeritageGroups(heritageGroups);
 
             } catch (Exception ex) {
-                //Logger.getLogger(HeritageGroup.class.getName()).log(Level.SEVERE, null, ex);
+                
 
             }             
          }
@@ -205,7 +205,23 @@ public class HeritageGroupMB {
         
         setHeritageGroups(heritageGroups);        
     }
-    
+     public void searchArchStyleAll()
+    {
+        try
+        {
+            architecturalstylesList.clear();
+            for (fit5042.heritage.repository.entities.Architecturalstyle architecturalstyle : heritageManagedBean.getArchFromDatabase())
+            {
+                architecturalstylesList.add(architecturalstyle);
+            }                  
+            setArchitecturalstylesList(architecturalstylesList);            
+        }
+        catch(Exception ex)
+        {
+            
+        }
+       
+    }   
     public void searchHeritageFromDB(){
         try {
                          
@@ -217,7 +233,7 @@ public class HeritageGroupMB {
                 setHeritageList(heritageList);
 
             } catch (Exception ex) {
-                Logger.getLogger(HeritageGroupMB.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(HGRPManagedBean.class.getName()).log(Level.SEVERE, null, ex);
 
             }        
     }

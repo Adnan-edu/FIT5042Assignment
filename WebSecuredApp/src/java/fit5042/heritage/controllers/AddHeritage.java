@@ -55,13 +55,10 @@ public class AddHeritage {
        try
        {
             heritageManagedBean.addHeritage(heritageLocal);
-
             //refresh the list in PropertyApplication bean
             heritageApplication.searchHeritageFromDB();
-            //updatePropertyListInPropertyApplicationBean();
-
-            //FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Property has been added succesfully"));
-            //refresh the property list in propertyApplication bean
+            heritageApplication.searchArchStyleAll();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Heritage has been added succesfully"));
        }
        catch (Exception ex)
        {

@@ -7,10 +7,9 @@ package fit5042.heritage.controllers;
 
 import fit5042.heritage.mbeans.HGRPManagedBean;
 import fit5042.heritage.mbeans.HeritageGroupMB;
-import fit5042.heritage.mbeans.HeritageManagedBean;
+import fit5042.restful.Architecturalstyle;
 import javax.el.ELContext;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -20,27 +19,22 @@ import javax.inject.Named;
  * @author Adnan
  */
 @RequestScoped
-@Named("removeHeritageGroup")
-public class RemoveHeritageGroup {
+@Named("removeArchStyle")
+public class RemoveArchStyle {
     @ManagedProperty(value="#{hGRPManagedBean}") 
     HGRPManagedBean hGRPManagedBean;
-    private boolean showForm = true;
-    private HeritageGroup heritageGroup;
-    HeritageGroupMB app;
+    private Architecturalstyle architecturalstyle;
+    HeritageGroupMB app;  
 
-    public boolean isShowForm() {
-        return showForm;
-    }    
-
-    public HeritageGroup getHeritageGroup() {
-        return heritageGroup;
+    public Architecturalstyle getArchitecturalstyle() {
+        return architecturalstyle;
     }
 
-    public void setHeritageGroup(HeritageGroup heritageGroup) {
-        this.heritageGroup = heritageGroup;
+    public void setArchitecturalstyle(Architecturalstyle architecturalstyle) {
+        this.architecturalstyle = architecturalstyle;
     }
-
-    public RemoveHeritageGroup()
+    
+    public RemoveArchStyle()
     {
         ELContext context
                 = FacesContext.getCurrentInstance().getELContext();
@@ -55,22 +49,18 @@ public class RemoveHeritageGroup {
         hGRPManagedBean = (HGRPManagedBean ) FacesContext.getCurrentInstance().getApplication()
         .getELResolver().getValue(elContext, null, "hGRPManagedBean");         
     }
-    
-    public void removeHerGrp(int groupId)
+    public void removeArchStyle(int archStyleId)
     {
        try
        {
-            //remove this property from db via EJB
-            hGRPManagedBean.removeHeritageGroup(groupId);
-
-            //refresh the list in PropertyApplication bean
-            app.searchHGRPAll();
+            
+            hGRPManagedBean.removeArchStyle(archStyleId);
+            app.searchArchStyleAll();
 
        }
        catch (Exception ex)
        {
            
-       }
-       showForm = true;        
-    }
+       }      
+    }    
 }

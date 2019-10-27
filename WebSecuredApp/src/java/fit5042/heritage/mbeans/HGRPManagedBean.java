@@ -1,12 +1,14 @@
 package fit5042.heritage.mbeans;
 
 import fit5042.heritage.repository.HeritageRepository;
+import fit5042.heritage.repository.entities.Architecturalstyle;
 import fit5042.heritage.repository.entities.HeritageGroup;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.el.ELContext;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
@@ -68,6 +70,27 @@ public class HGRPManagedBean implements Serializable{
         }    
     }
     
+      public void editArchStyle(Architecturalstyle architecturalstyle){
+        try {
+            heritageRepository.editArchStyle(architecturalstyle);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Architecturalstyle has been updated succesfully"));
+            this.updateArchStyleList();
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Architecturalstyle can't be updated"));
+            Logger.getLogger(HGRPManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+    }
+      private void updateArchStyleList()
+      {
+            ELContext context
+                    = FacesContext.getCurrentInstance().getELContext();
+            HeritageGroupMB app
+                    = (HeritageGroupMB) FacesContext.getCurrentInstance()
+                            .getApplication()
+                            .getELResolver()
+                            .getValue(context, null, "heritageGroupMB");
+            app.searchArchStyleAll();
+      }
     public void addHeritageCategory(fit5042.heritage.controllers.HeritageGroup localHeritageGroup)
     {
             HeritageGroup heritageGroupNew = convertHGToEntity(localHeritageGroup);
@@ -98,10 +121,20 @@ public class HGRPManagedBean implements Serializable{
     {
          try {
             heritageRepository.removeHeritageGroup(groupId);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Heritage group id "+groupId+" has been deleted succesfully."));
         } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Heritage group id "+groupId+" is not deleted.")); 
             Logger.getLogger(HGRPManagedBean.class.getName()).log(Level.SEVERE, null, ex);
         }       
     }
-    
-      
+    public void removeArchStyle(int archStyleId)
+    {
+          try {
+            heritageRepository.removeArchStyle(archStyleId);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Architectural style of id "+archStyleId+" has been deleted succesfully."));
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Architectural style of id "+archStyleId+" is not deleted.")); 
+            Logger.getLogger(HGRPManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+        }       
+    }
 }

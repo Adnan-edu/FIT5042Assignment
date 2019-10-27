@@ -8,28 +8,32 @@
     </h:head> 
     <h:body> 
         <div class="container">
-            <nav class="navbar navbar-inverse">
-                  <div class="container">
-                    <div class="navbar-header">
-                      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                      </button>
-                      <a class="navbar-brand" href="#">Heritage-Admin</a>
-                    </div>
-                    <div id="navbar" class="collapse navbar-collapse">
-                      <ul class="nav navbar-nav">
-                        <li class="active"><h:link value="Home" outcome="index" /></li>
-                        <li><h:link value="About" outcome="index" /></li>
-                        <li><h:link value="Assign Employee" outcome="assignemployee.xhtml" /></li>
-                        
-                         
-                      </ul>
-                    </div>
-                  </div>
-                </nav>
+            
+                <nav class="navbar navbar-inverse">
+                      <div class="container">
+                        <div class="navbar-header">
+                          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                          </button>
+                          <a class="navbar-brand" href="#"><h:outputText value="#{logoutController.loggedInUser}" /></a>
+                        </div>
+                        <div id="navbar" class="collapse navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                  <li class="active"><h:link value="Home" outcome="/faces/admin/index" /></li>
+                                  <li><h:link value="About" outcome="/faces/admin/index" /></li>
+                                  <li><h:link value="Assign Employee" outcome="/faces/admin/assignemployee.xhtml" /></li> 
+                            </ul>
+                            <h:form class="space">
+                                <ul class="nav navbar-right">
+                                    <li><h:commandLink value="Logout" action="#{logoutController.logoutNow()}" class="btn btn-info" /></li>
+                                </ul>                            
+                            </h:form>                        
+                        </div>
+                      </div>
+                </nav>            
         </div>    
                
                     <h1>Administration Area</h1>

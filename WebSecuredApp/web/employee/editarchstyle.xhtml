@@ -47,28 +47,28 @@
                         <td width ="150" valign="top">Id:</td>
                         
                         <td valign="bottom">
-                            <h:outputLabel id = "ID" >#{hGRPController.heritageGroup.groupId}</h:outputLabel>    
+                            <h:outputLabel id = "ID" >#{archStyleController.architecturalstyle.archStyleId}</h:outputLabel>    
                         </td>
                     </tr>                 
                     <tr>
-                        <td width ="100" valign="top">Category Name: </td> 
+                        <td width ="100" valign="top">Period Name: </td> 
                         <td valign="bottom">
-                            <h:inputText id = "catName" styleClass="form-control" value="#{hGRPController.heritageGroup.groupCategory}" required="true"></h:inputText>    
+                            <h:inputText id = "catName" styleClass="form-control" value="#{archStyleController.architecturalstyle.periodName}" required="true"></h:inputText>    
                         </td>
                     </tr>
                     <tr>
-                        <td width ="100" valign="top">Sub Category Name: </td> 
+                        <td width ="100" valign="top">Period From-To: </td> 
                         <td valign="bottom">
-                            <h:inputText id = "subcatName" styleClass="form-control" value="#{hGRPController.heritageGroup.groupSubCategory}" required="true"></h:inputText>    
+                            <h:inputText id = "subcatName" styleClass="form-control" value="#{archStyleController.architecturalstyle.periodFromTo}" required="true"></h:inputText>    
                         </td>
                     </tr>                    
                 </table>
                 <div class="form-group">
-                    <h:commandButton style="margin: 15px" id="save" value="Save" action="#{hGRPManagedBean.editHeritageGroup(hGRPController.heritageGroup)}"  class="btn btn-info" >
-                            <f:param name="groupId" value="#{hGRPController.groupId+1}"/>
+                    <h:commandButton style="margin: 15px" id="save" value="Save" action="#{hGRPManagedBean.editArchStyle(archStyleController.architecturalstyle)}"  class="btn btn-info" >
+                            <f:param name="archStyleId" value="#{archStyleController.archStyleId+1}"/>
                     </h:commandButton>
-                    <h:commandButton style="margin: 15px" id="Close" value="Close" action="heritagegroup.xhtml" class="btn btn-info" >
-                            <f:param name="groupId" value="#{hGRPController.groupId+1}"/>
+                    <h:commandButton style="margin: 15px" id="Close" value="Close" action="archstylelist.xhtml" class="btn btn-info" >
+                            <f:param name="archStyleId" value="#{archStyleController.archStyleId+1}"/>
                     </h:commandButton>                     
                 </div>                
             </h:form>
